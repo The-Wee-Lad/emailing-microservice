@@ -1,4 +1,4 @@
-export class ApiResponse<T> {
+export class CustomApiResponse<T> {
   success: boolean;
   message: string;
   data?: T;
@@ -10,10 +10,10 @@ export class ApiResponse<T> {
   }
 
   static success<T>(message: string, data?: T) {
-    return new ApiResponse<T>(true, message, data);
+    return new CustomApiResponse<T>(true, message, data);
   }
 
   static error(message: string) {
-    return new ApiResponse(false, message);
+    return new CustomApiResponse(false, message);
   }
 }

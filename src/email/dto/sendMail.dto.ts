@@ -1,17 +1,33 @@
-import { Optional } from '@nestjs/common';
-import { IsEmail, IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class sendMailDto {
+  @ApiProperty({
+    example: 'a6925220@gmail.com',
+    description: 'Recipient email address',
+  })
   @IsEmail()
   to: string;
 
-  @IsEmail()
-  from: string;
+  // @ApiProperty({
+  //   example: '',
+  //   description: 'Sender email address',
+  // })
+  // @IsEmail()
+  // from: string;
 
-  @Optional()
+  @ApiPropertyOptional({
+    example: 'Welcome to our service!',
+    description: 'Email subject',
+  })
+  @IsOptional()
   @IsString()
-  subject: string = '';
+  subject?: string;
 
+  @ApiProperty({
+    example: 'This is a test mail.',
+    description: 'Email content body',
+  })
   @IsString()
   content: string;
 }
