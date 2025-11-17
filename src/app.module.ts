@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { EmailModule } from './email/email.module';
+import { EmailLogsController } from './email-logs/email-logs.controller';
+import { EmailLogsModule } from './email-logs/email-logs.module';
 
 @Module({
   imports: [
@@ -37,9 +39,11 @@ import { EmailModule } from './email/email.module';
     }),
 
     EmailModule,
+
+    EmailLogsModule,
   ],
 
-  controllers: [AppController],
+  controllers: [AppController, EmailLogsController],
   providers: [AppService],
 })
 export class AppModule { }
