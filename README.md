@@ -1,98 +1,189 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Emailing Service (NestJS)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A lightweight and scalable **Emailing Microservice** built using **NestJS**, providing APIs to send emails, view logs, and manage SMTP-based transactions efficiently.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This service includes:
 
-## Description
+- SMTP mailing (Zoho, Gmail, AWS SES, Mailgun, etc.)
+- Centralized logging of outgoing emails
+- Paginated log retrieval
+- Swagger API documentation
+- DTO validation + error handling
+- Production-ready configuration structure
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 📘 API Documentation
 
-```bash
-$ npm install
+Swagger documentation is available at:
+
+👉 **`/api-docs`**
+
+Example:
+
+[http://localhost:8000/api-docs](http://localhost:8000/api-docs)
+
+
+---
+
+## 🚀 Features
+
+- ✉️ Send emails via SMTP  
+- 🧾 Fetch paginated logs  
+- 📦 Uses MongoDB for log storage  
+- 🔐 Environment-based configuration  
+- 📄 Validation using `class-validator`  
+- 🧰 Swagger for API documentation  
+- 🏗️ Modular, scalable NestJS architecture  
+
+---
+
+## 📁 Folder Structure
+
 ```
 
-## Compile and run the project
+src/
+├── email/
+│    ├── dto/
+│    │    └── sendMail.dto.ts
+│    ├── email.controller.ts
+│    ├── email.service.ts
+│    └── email.module.ts
+├── email-logs/
+│    ├── dto/
+│    │    └── getLogs.dto.ts
+│    ├── email-logs.controller.ts
+│    ├── email-logs.service.ts
+│    └── email-logs.module.ts
+├── common/
+│    └── ApiResponse.ts
+├── app.module.ts
+└── main.ts
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## ⚙️ Environment Variables
 
-# e2e tests
-$ npm run test:e2e
+Create a `.env` file in the root:
 
-# test coverage
-$ npm run test:cov
 ```
 
-## Deployment
+PORT=8000
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+# Database
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+MONGO_URI="mongodb+srv://<username>:<password>@cluster0.mongodb.net"
+DB_NAME="emailing-service"
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# SMTP
+
+SMTP_HOST="smtp.zoho.in"
+SMTP_PORT=465
+SMTP_USER="[your_email@zohomail.in](mailto:your_email@zohomail.in)"
+SMTP_PASS="your_smtp_password"
+
+# Default Sender
+
+FROM="[your_email@zohomail.in](mailto:your_email@zohomail.in)"
+
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+For reference, also keep:
 
-## Resources
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+.env.example
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+````
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🛠 Installation
 
-## Stay in touch
+```bash
+npm install
+````
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## ▶️ Running the Project
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Development
+
+```bash
+npm run start:dev
+```
+
+### Production Build
+
+```bash
+npm run build
+npm run start:prod
+```
+
+### Standard Start
+
+```bash
+npm run start
+```
+
+---
+
+## 🧪 Running Tests
+
+```bash
+# Unit tests
+npm run test
+
+# E2E tests
+npm run test:e2e
+
+# Coverage
+npm run test:cov
+```
+
+---
+
+## 📨 Example — Send Email Request
+
+```json
+POST /email
+{
+  "to": "user@example.com",
+  "from": "your_email@zohomail.in",
+  "subject": "Welcome!",
+  "content": "Your account was successfully created."
+}
+```
+
+---
+
+## 📄 Example — Fetch Logs
+
+```
+GET /email-logs?page=1&limit=10
+```
+
+---
+
+## 🚀 Deployment Notes
+
+* Ensure `.env` is configured for production.
+* Verify SMTP sender domain supports:
+
+  * SPF
+  * DKIM
+  * DMARC
+* Use Docker or PM2 for stable deployment
+
+NestJS deployment guide: [https://docs.nestjs.com/deployment](https://docs.nestjs.com/deployment)
+
+---
+
+## 👤 Author
+
+**Aditya Narayan**
+Emailing Service — Built with NestJS
+
