@@ -20,26 +20,21 @@ import { EmailLogsModule } from './email-logs/email-logs.module';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         uri: `${config.get('MONGO_URI')}/${config.get('DB_NAME')}?retryWrites=true&w=majority`,
-        connectionFactory: (connection: Connection) => {
+        connectionFactory: async (connection: Connection) => {
           const logger = new Logger('MongoDB');
-
-          connection.on('connected', () => logger.log('MongoDB connected'));
-          connection.on('open', () => logger.log('MongoDB open'));
-          connection.on('disconnected', () =>
-            logger.log('MongoDB disconnected'),
-          );
-          connection.on('reconnected', () => logger.log('MongoDB reconnected'));
-          connection.on('disconnecting', () =>
-            logger.log('MongoDB disconnecting'),
-          );
-
+          await connection
+            .asPromise()
+            .then((conn) => {
+              logger.log(`MongoDB connected :: ${conn.host}`);
+            })
+            .catch((err) => {
+              logger.log(`MongoDB connection Failed :: ${err}`);
+            });
           return connection;
         },
       }),
     }),
-
     EmailModule,
-
     EmailLogsModule,
   ],
 

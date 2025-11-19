@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import * as nodemailer from 'nodemailer';
-import { Transporter, SentMessageInfo } from 'nodemailer';
+import { SentMessageInfo } from 'nodemailer';
 
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
